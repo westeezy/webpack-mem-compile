@@ -1,3 +1,1 @@
-/* @flow */
-
-module.exports = require('./src'); // eslint-disable-line import/no-commonjs
+module.exports = require('./dist'); // eslint-disable-line import/no-commonjs

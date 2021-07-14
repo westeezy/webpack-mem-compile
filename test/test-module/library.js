@@ -1,5 +1,3 @@
-/* @flow */
-
-export function foo(bar : number) : number {
+export function foo(bar) {
     return bar + 1;
 }

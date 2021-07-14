@@ -1,5 +1,3 @@
-/* @flow */
-
 import { join } from 'path';
 
 import webpack from 'webpack';
@@ -8,7 +6,6 @@ import { getWebpackConfig } from 'grumbler-scripts/config/webpack.config';
 import { webpackCompile } from '../src';
 
 test('should webpack compile a module and successfully run the result', async () => {
-
     const code = await webpackCompile({
         webpack,
         config: getWebpackConfig({
@@ -20,8 +17,7 @@ test('should webpack compile a module and successfully run the result', async ()
         throw new Error(`Expected webpackCompile to return a code string`);
     }
 
-    const module = {};
-
+    const module: any = {};
     // eslint-disable-next-line no-eval, security/detect-eval-with-expression
     eval(code);
 
@@ -35,14 +31,12 @@ test('should webpack compile a module and successfully run the result', async ()
         throw new Error(`Expected foo to add 1 to input`);
     }
 });
-
 test('should webpack compile a some raw code and successfully run the result', async () => {
-
     const code = await webpackCompile({
         webpack,
         config: getWebpackConfig(),
         code:   `
-            export function bar(num : number) : number {
+            export function bar(num) {
                 return num * 2;
             }
         `
@@ -52,8 +46,7 @@ test('should webpack compile a some raw code and successfully run the result', a
         throw new Error(`Expected webpackCompile to return a code string`);
     }
 
-    const module = {};
-
+    const module: any = {};
     // eslint-disable-next-line no-eval, security/detect-eval-with-expression
     eval(code);
 
@@ -69,7 +62,6 @@ test('should webpack compile a some raw code and successfully run the result', a
 });
 
 test('should webpack compile a some raw code without any config, and successfully run the result', async () => {
-
     const code = await webpackCompile({
         webpack,
         code: `
@@ -86,10 +78,12 @@ test('should webpack compile a some raw code without any config, and successfull
     // eslint-disable-next-line no-eval, security/detect-eval-with-expression
     eval(code);
 
+    // @ts-ignore globals
     if (!global.baz || typeof global.baz !== 'function') {
         throw new Error(`Expected module to export baz function`);
     }
 
+    // @ts-ignore globals
     if (global.baz(5) !== 25) {
         throw new Error(`Expected baz to be squared`);
     }
