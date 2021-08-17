@@ -7,14 +7,15 @@
   "scripts": {
     "babel": "babel ./src --ignore=node_modules --out-dir ./dist --source-maps inline --extensions .ts,.tsx",
     "build": "npm run clean && npm run babel && npm run build:types",
+    "build:tsc": "tsc -p tsconfig.build.json",
     "build:flow": "find . -type f -not -path './node_modules/*' -name '*.d.ts' -exec sh -c 'flowgen --add-flow-header $1 -o ${1%.*.*}.js.flow' _ '{}' \\;",
-    "build:tsc": "tsc -p tsconfig.json",
     "build:types": "npm run build:tsc && npm run build:flow",
     "clean": "rimraf dist",
     "lint": "eslint --ext js,jsx,ts,tsx src/ test/",
     "jest": "jest test --no-cache --coverage --collectCoverageFrom=./src --verbose --runInBand --silent=false",
     "prepublishOnly": "npm run build",
-    "test": "npm run lint && npm run jest"
+    "test": "npm run lint && npm run jest",
+    "tsc": "tsc"
   },
   "repository": {
     "type": "git",

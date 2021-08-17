@@ -1,5 +1,6 @@
 import MemoryFS from 'memory-fs';
-import type { Configuration, webpack as Webpack } from 'webpack';
+import Webpack from 'webpack';
+import type { Configuration } from 'webpack';
 
 import { getTempFile } from './util';
 
@@ -16,11 +17,9 @@ export async function webpackCompile({
     config?: Configuration;
     code?: string;
 }): Promise<string> {
-    const webpackConfig = { ...config,
-        output: { ...config.output,
-            path:     '/',
-            filename: 'output.js'
-        }
+    const webpackConfig = {
+        ...config,
+        output: { ...config.output, path: '/', filename: 'output.js' }
     };
     let tempFile;
 
@@ -33,19 +32,27 @@ export async function webpackCompile({
     const compiler = webpack(webpackConfig);
     compiler.outputFileSystem = new MemoryFS();
     const result = await new Promise<string>((resolve, reject) => {
-        compiler.run((err, stats) => {
+        compiler.run((err: Error, stats: any) => {
             if (err) {
                 return reject(err);
             }
 
             if (stats?.hasErrors()) {
-                return reject(new Error(stats.toString({
-                    errorDetails: true,
-                    warnings:     true
-                })));
+                return reject(
+                    new Error(
+                        stats.toString({
+                            errorDetails:true,
+                            warnings:    true
+                        })
+                    )
+                );
             }
 
-            resolve((compiler.outputFileSystem as MemoryFS).data['output.js'].toString());
+            resolve(
+                (compiler.outputFileSystem as MemoryFS).data[
+                    'output.js'
+                ].toString()
+            );
         });
     });
 

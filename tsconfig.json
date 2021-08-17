@@ -1,7 +1,3 @@
 {
-  "extends": "grumbler-scripts/tsconfig.json",
-  "include": ["src/**/*"],
-  "compilerOptions": {
-    "outDir": "./dist"
-  }
+    "extends": "grumbler-scripts/config/tsconfig.json"
 }

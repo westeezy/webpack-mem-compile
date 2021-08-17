@@ -34,8 +34,8 @@ test('should webpack compile a module and successfully run the result', async ()
 test('should webpack compile a some raw code and successfully run the result', async () => {
     const code = await webpackCompile({
         webpack,
-        config: getWebpackConfig(),
-        code:   `
+        config:getWebpackConfig(),
+        code:  `
             export function bar(num) {
                 return num * 2;
             }
